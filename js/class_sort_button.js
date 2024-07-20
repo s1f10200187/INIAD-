@@ -8,14 +8,23 @@ $(function(){
 $(document).on("click", "#download-slide-all", function(){
     let confirm_regist = confirm("すべてのスライドDLをしますか？");
     if(confirm_regist){
-        let registclasses = $(".well");
-        let textsh4 = $(registclasses).find(".media-heading");
-        let l_txt = [];
-        $(textsh4).each(function(index){
-            l_txt.push($(this).text());
-        });
+        // href="/courses/2023/"からはじまるすべてのaタグを取得
+        let a_tags = $("a[href^='/courses/2023/']");
+        let a_tags_length = a_tags.length;
+        let a_tags_href = [];
+        for(let i = 0; i < a_tags_length; i++){
+            a_tags_href.push(a_tags[i].href);
+        }
+        console.log(a_tags_href);
+        
+        // let registclasses = $(".well");
+        // let textsh4 = $(registclasses).find(".media-heading");
+        // let l_txt = [];
+        // $(textsh4).each(function(index){
+        //     l_txt.push($(this).text());
+        // });
 
-        let registclass_local = JSON.stringify(l_txt, null, "");
-        localStorage.setItem("registedclass", registclass_local);
+        // let registclass_local = JSON.stringify(l_txt, null, "");
+        // localStorage.setItem("registedclass", registclass_local);
     }
 });
