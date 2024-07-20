@@ -64,7 +64,7 @@ function getDeepestUrlIndex(urlList) {
 }
 
 //ボタンが押下されたとき、すべてのスライドをDLする
-$(document).on("click", "#download-slide-all", function(){
+$(document).on("click", "#download-slide-all", async function(){
     let confirm_regist = confirm("すべてのスライドDLをしますか？");
     if(confirm_regist){
       const currentUrl = window.location.href; // 現在のURLを取得
