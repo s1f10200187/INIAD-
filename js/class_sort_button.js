@@ -1,5 +1,5 @@
 $(function(){
-    if(window.location.pathname in "/courses"){
+    if(window.location.pathname == "/courses/2023"){
         const clsbtn = '<button id="download-slide-all" class="btn btn-success">すべてのスライドをDL</button>'
         $($(".flex")[0]).before(clsbtn);
     }
