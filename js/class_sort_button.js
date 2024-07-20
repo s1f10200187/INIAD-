@@ -76,46 +76,6 @@ $(document).on("click", "#download-slide-all", function(){
           }
         }
       
-      /**
-       * 指定されたURLから指定された深さまでのすべてのリンクを取得します。
-       * @param {string} url - クロールを開始するURL。
-       * @param {number} [depth=2] - クロールする最大の深さ。
-       * @returns {Promise<string[]>} - ユニークなリンクの配列を解決するPromise。
-       */
-      async function getAllLinks(url, depth = 2) {
-          if (depth === 0) {
-          return [];
-          }
-      
-          const visitedUrls = new Set();
-          const linksToVisit = [url];
-          const allLinks = [];
-      
-          while (linksToVisit.length > 0) {
-          const currentUrl = linksToVisit.pop();
-          if (visitedUrls.has(currentUrl)) {
-          continue;
-          }
-      
-          visitedUrls.add(currentUrl);
-          const doc = await fetchPage(currentUrl);
-          if (!doc) {
-          continue;
-          }
-      
-          const links = Array.from(doc.querySelectorAll('a[href]')).map(a => new URL(a.href, currentUrl).href);
-          allLinks.push(...links);
-      
-          for (const link of links) {
-          if (!visitedUrls.has(link) && new URL(link).origin === new URL(url).origin) {
-              linksToVisit.push(link);
-          }
-          }
-          }
-      
-          return Array.from(new Set(allLinks));
-      }
-      
       (async () => {
           const startUrl = window.location.href;
           const links = await getAllLinks(startUrl, 2);
