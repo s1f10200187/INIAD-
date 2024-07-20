@@ -18,8 +18,13 @@ $(document).on("click", "#download-slide-all", function(){
         console.log(a_tags_href);
 
         // https://moocs.iniad.org/courses/2023/BTHESISへ遷移
-        window.location.href = 'https://example.com';
-        
+        for (src_urls of a_tags_href){
+            window.location.href = src_urls;
+            alert("遷移しました");
+            //三秒停止
+            sleep(3000);
+        }
+
         // let registclasses = $(".well");
         // let textsh4 = $(registclasses).find(".media-heading");
         // let l_txt = [];
