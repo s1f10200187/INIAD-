@@ -26,8 +26,8 @@ async function getUrlsRecursively(url, depth, maxDepth, urlList = []) {
     const html = await response.text();
     // フェッチしたHTMLをパース
     const doc = new DOMParser().parseFromString(html, 'text/html');
-    // ページ内の全てのリンクを取得
-    const links = doc.querySelectorAll('a[href]');
+    // ページ内の全てのcurrentUrlからはじまるリンクを取得
+    const links = doc.querySelectorAll(`a[href^="${window.location.origin}"]`);
 
     // 各リンクについて再帰的にURLを取得
     for (const link of links) {
