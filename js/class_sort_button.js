@@ -21,18 +21,22 @@ async function getUrlsRecursively(url, depth, maxDepth, urlList = []) {
   urlList.push(url);
 
   try {
-    // URLの内容をフェッチ
-    const response = await fetch(url);
-    const html = await response.text();
-    // フェッチしたHTMLをパース
-    const doc = new DOMParser().parseFromString(html, 'text/html');
+    // iframeを作成してURLのサイトを表示
+    const iframe = document.createElement('iframe');
+    iframe.style.width = '100%';
+    iframe.style.height = '500px'; // 適切な高さに調整してください
+
+
     // ページ内の全てのclass="btn btn-primary"のリンクを取得
-    const links = doc.querySelectorAll('.btn.btn-primary');
+    const links = document.querySelectorAll('.btn.btn-primary');
 
     // 各リンクについて再帰的にURLを取得
     for (const link of links) {
       // リンクの絶対URLを取得
       const href = new URL(link.href, url).href;
+      iframe.src = href;
+      document.body.appendChild(iframe); // iframeをbodyに追加
+      
       // 同一オリジンのリンクのみを対象とする
       if (href.startsWith(window.location.origin)) {
         await getUrlsRecursively(href, depth + 1, maxDepth, urlList);
