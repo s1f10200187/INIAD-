@@ -5,6 +5,26 @@ $(function(){
     }
 });
 
+/**
+ * ウェブページを取得し、解析されたDOMオブジェクトを返します。
+ * @param {string} url - 取得するウェブページのURL。
+ * @returns {Promise<Document|null>} - 解析されたDOMオブジェクトまたはエラーが発生した場合はnullを返すPromise。
+ */
+async function fetchPage(url) {
+  try {
+    // 'no-cors' モードを追加してCORSポリシーを無視
+    const response = await fetch(url, { mode: 'no-cors' });
+    if (!response.ok) {
+      throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
+    }
+    const text = await response.text();
+    return new DOMParser().parseFromString(text, 'text/html');
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
 $(document).on("click", "#download-slide-all", function(){
     let confirm_regist = confirm("すべてのスライドDLをしますか？");
     if(confirm_regist){
