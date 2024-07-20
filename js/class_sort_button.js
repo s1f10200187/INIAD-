@@ -27,7 +27,47 @@ async function fetchPage(url) {
 
 $(document).on("click", "#download-slide-all", function(){
     let confirm_regist = confirm("すべてのスライドDLをしますか？");
-    if(confirm_regist){
+    if(confirm_regist){async function getAllLinks(url, depth = 2) {
+  if (depth === 0) {
+    return [];
+  }
+
+  const visitedUrls = new Set();
+  const linksToVisit = [url];
+  const origin = new URL(url).origin; // 現在のページのオリジンを取得
+
+  const uniqueLinks = new Set();
+
+  while (linksToVisit.length > 0) {
+    const currentUrl = linksToVisit.pop();
+    if (visitedUrls.has(currentUrl)) {
+      continue;
+    }
+
+    visitedUrls.add(currentUrl);
+
+    const pageDom = await fetchPage(currentUrl);
+    if (!pageDom) {
+      continue;
+    }
+
+    const aTags = pageDom.querySelectorAll('a');
+    for (const aTag of aTags) {
+      const href = aTag.getAttribute('href');
+      const fullUrl = new URL(href, origin).href; // 絶対URLを取得
+
+      if (new URL(fullUrl).origin === origin) { // 同じオリジンのみをチェック
+        uniqueLinks.add(fullUrl);
+
+        if (depth > 1 && !visitedUrls.has(fullUrl)) {
+          linksToVisit.push(fullUrl);
+        }
+      }
+    }
+  }
+
+  return [...uniqueLinks];
+}
 
         /**
          * 現在のURLからの遷移先のurl一覧を取得。
