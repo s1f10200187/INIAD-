@@ -67,7 +67,7 @@ function getDeepestUrlIndex(urlList) {
 $(document).on("click", "#download-slide-all", async function(){
     let confirm_regist = confirm("すべてのスライドDLをしますか？");
     if(confirm_regist){
-      const currentUrl = window.location.href; // 現在のURLを取得
+      const currentUrl = "https://moocs.iniad.org/courses/2023"; // 現在のURLを取得
       const maxDepth = 3; // 最大深さを設定
       const urlList = []; // URLリストを初期化
     
