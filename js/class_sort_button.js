@@ -20,9 +20,7 @@ $(document).on("click", "#download-slide-all", function(){
         // https://moocs.iniad.org/courses/2023/BTHESISへ遷移
         for (src_urls of a_tags_href){
             window.location.href = src_urls;
-            alert("遷移しました");
-            //三秒停止
-            sleep(3000);
+            confirm("遷移しました");
         }
 
         // let registclasses = $(".well");
