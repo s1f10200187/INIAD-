@@ -16,7 +16,18 @@ $(document).on("click", "#download-slide-all", function(){
             a_tags_href.push(a_tags[i].href);
         }
         console.log(a_tags_href);
-        
+
+        // a_tags_hrefのすべてのurlにアクセスし、helloをalertする
+        for(let i = 0; i < a_tags_length; i++){
+            $.ajax({
+                url: a_tags_href[i],
+                type: "GET",
+                success: function(data){
+                    alert("hello");
+                }
+            });
+        };
+
         // let registclasses = $(".well");
         // let textsh4 = $(registclasses).find(".media-heading");
         // let l_txt = [];
